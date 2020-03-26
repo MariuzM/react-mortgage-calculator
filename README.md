@@ -13,5 +13,3 @@ npm install
 - As of 2020-03-26 all latest packages
 - Function components
 - Hooks
-
-# react-mortgage-calculator
