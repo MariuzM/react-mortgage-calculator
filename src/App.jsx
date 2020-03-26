@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
 
+import './App.scss'
+
 const init = {
   propValue: '',
   deposit: '',
   percentage: '',
+  mortValue: '',
 }
 
 export default function App() {
@@ -17,6 +20,7 @@ export default function App() {
           ...state,
           propValue: toNumber,
           percentage: (state.deposit * 100) / toNumber,
+          mortValue: toNumber - state.deposit,
         })
         break
       case 'Deposit':
@@ -24,6 +28,7 @@ export default function App() {
           ...state,
           deposit: toNumber,
           percentage: (toNumber * 100) / state.propValue,
+          mortValue: state.propValue - toNumber,
         })
         break
       case 'Percentage':
@@ -31,6 +36,7 @@ export default function App() {
           ...state,
           deposit: (state.propValue * toNumber) / 100,
           percentage: toNumber,
+          mortValue: state.propValue - (state.propValue * toNumber) / 100,
         })
         break
       default:
@@ -72,6 +78,16 @@ export default function App() {
           placeholder="Percentage"
         />
         {`${state.percentage}%`}
+      </div>
+
+      <div className="textbox">
+        <input
+          type="number"
+          min="0"
+          value={state.mortValue}
+          onChange={handleChange}
+          placeholder="Mortgage Value"
+        />
       </div>
     </form>
   )
