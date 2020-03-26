@@ -35,6 +35,7 @@ export default function App() {
       type: 'range',
       max: '100',
       value: state.percentage,
+      percent: state.percentage,
     },
     {
       key: 4,
@@ -51,6 +52,7 @@ export default function App() {
       step: '0.1',
       max: '5',
       value: state.intRate,
+      percent: state.intRate,
     },
     {
       key: 6,
@@ -80,7 +82,7 @@ export default function App() {
         setState({
           ...state,
           deposit: toNumber,
-          percentage: (toNumber * 100) / state.propValue,
+          percentage: Math.trunc((toNumber * 100) / state.propValue),
           mortValue: state.propValue - toNumber,
         })
         break
@@ -89,7 +91,7 @@ export default function App() {
           ...state,
           percentage: toNumber,
           deposit: (state.propValue * toNumber) / 100,
-          mortValue: state.propValue - (state.propValue * toNumber) / 100,
+          mortValue: Math.trunc(state.propValue - (state.propValue * toNumber) / 100),
           mortFinal: calcMortFinal(state.mortValue, state.intRate, state.years),
         })
         break
@@ -125,7 +127,7 @@ export default function App() {
 
   return (
     <form>
-      {elements.map(({ key, name, id, type, step, max, value }) => {
+      {elements.map(({ key, name, id, type, step, max, value, percent }) => {
         return (
           <div key={key}>
             {name}
@@ -139,6 +141,7 @@ export default function App() {
                 min="0"
                 max={max}
               />
+              {percent !== undefined ? `${percent}%` : ''}
             </div>
           </div>
         )
