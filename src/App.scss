@@ -1,3 +1,113 @@
-.textbox > input {
-  width: 500px;
+$input-color: #99a3ba;
+$input-border: #cdd9ed;
+$input-background: #fff;
+$input-placeholder: #cbd1dc;
+$input-border-focus: #275efe;
+$group-background: #eef4ff;
+$group-color-focus: #fff;
+$group-background-focus: #678efe;
+
+.margin-bottom {
+  margin-bottom: 50px;
+}
+
+* {
+  box-sizing: inherit;
+  &:before,
+  &:after {
+    box-sizing: inherit;
+  }
+}
+
+body {
+  min-height: 100vh;
+  font-family: 'Mukta Malar', Arial;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #f5f9ff;
+  .form-group {
+    max-width: 360px;
+    &:not(:last-child) {
+      margin-bottom: 32px;
+    }
+  }
+}
+
+.form-group {
+  position: relative;
+  display: flex;
+  & > span,
+  .form-field {
+    width: 150px;
+    white-space: nowrap;
+    display: block;
+    &:not(:first-child):not(:last-child) {
+      border-radius: 0;
+    }
+    &:first-child {
+      border-radius: 6px 0 0 6px;
+    }
+    &:last-child {
+      border-radius: 0 6px 6px 0;
+    }
+    &:not(:first-child) {
+      margin-left: -1px;
+    }
+  }
+  .form-field {
+    position: relative;
+    z-index: 1;
+    flex: 1 1 auto;
+    width: 1%;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  & > span {
+    width: 150px;
+    text-align: center;
+    padding: 8px 12px;
+    font-size: 14px;
+    line-height: 25px;
+    color: $input-color;
+    background-color: $group-background;
+    border: 1px solid $input-border;
+    transition: background-color 0.3s ease, border 0.3s ease, color 0.3s ease;
+  }
+  &:focus-within {
+    & > span {
+      color: $group-color-focus;
+      background: $group-background-focus;
+      border-color: $input-border-focus;
+    }
+  }
+}
+
+.form-percent {
+  display: block;
+  width: 100%;
+}
+
+.form-field {
+  display: block;
+  width: 100%;
+  padding: 8px 16px;
+  line-height: 25px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  border-radius: 6px;
+  appearance: none;
+  color: $input-color;
+  border: 1px solid $input-border;
+  background: $input-background;
+  transition: border 0.3s ease;
+  &::placeholder {
+    color: $input-placeholder;
+  }
+  &:focus {
+    outline: none;
+    border-color: $input-border;
+  }
 }

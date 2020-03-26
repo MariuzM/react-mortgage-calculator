@@ -20,6 +20,7 @@ export default function App() {
       id: 'Property-Value',
       type: 'number',
       value: state.propValue,
+      className: 'form-field',
     },
     {
       key: 2,
@@ -27,6 +28,7 @@ export default function App() {
       id: 'Deposit',
       type: 'number',
       value: state.deposit,
+      className: 'form-field',
     },
     {
       key: 3,
@@ -36,6 +38,7 @@ export default function App() {
       max: '100',
       value: state.percentage,
       percent: state.percentage,
+      className: 'form-percent',
     },
     {
       key: 4,
@@ -43,6 +46,7 @@ export default function App() {
       id: 'Mortgage-Value',
       type: 'number',
       value: state.mortValue,
+      className: 'form-field',
     },
     {
       key: 5,
@@ -53,6 +57,7 @@ export default function App() {
       max: '5',
       value: state.intRate,
       percent: state.intRate,
+      className: 'form-percent',
     },
     {
       key: 6,
@@ -60,6 +65,7 @@ export default function App() {
       id: 'Years',
       type: 'number',
       value: state.years,
+      className: 'form-field',
     },
   ]
 
@@ -74,7 +80,7 @@ export default function App() {
         setState({
           ...state,
           propValue: toNumber,
-          percentage: (state.deposit * 100) / toNumber,
+          percentage: Math.trunc((state.deposit * 100) / toNumber),
           mortValue: toNumber - state.deposit,
         })
         break
@@ -91,11 +97,11 @@ export default function App() {
           ...state,
           percentage: toNumber,
           deposit: (state.propValue * toNumber) / 100,
-          mortValue: Math.trunc(state.propValue - (state.propValue * toNumber) / 100),
-          mortFinal: calcMortFinal(state.mortValue, state.intRate, state.years),
+          mortValue: state.propValue - (state.propValue * toNumber) / 100,
+          // mortFinal: calcMortFinal(state.mortValue, state.intRate, state.years),
         })
         break
-      case 'Mortgage Value':
+      case 'Mortgage-Value':
         setState({
           ...state,
           mortValue: toNumber,
@@ -127,114 +133,27 @@ export default function App() {
 
   return (
     <form>
-      {elements.map(({ key, name, id, type, step, max, value, percent }) => {
+      {elements.map(({ key, name, id, type, step, max, value, percent, className }) => {
         return (
-          <div key={key}>
-            {name}
-            <div className="textbox">
-              <input
-                id={id}
-                type={type}
-                value={value}
-                onChange={handleChange}
-                step={step}
-                min="0"
-                max={max}
-              />
-              {percent !== undefined ? `${percent}%` : ''}
-            </div>
+          <div key={key} className="form-group">
+            <span>
+              {name}
+              {percent !== undefined ? ` ${percent}%` : ''}
+            </span>
+            <input
+              id={id}
+              type={type}
+              value={value}
+              onChange={handleChange}
+              step={step}
+              min="0"
+              max={max}
+              className={className}
+            />
           </div>
         )
       })}
-
       {state.mortFinal}
-
-      <br />
-
-      {/* <div>
-        Property Value
-        <div className="textbox">
-          <input
-            id="Property-Value"
-            type="number"
-            value={state.propValue}
-            onChange={handleChange}
-            // placeholder="Property Value"
-            min="0"
-          />
-        </div>
-      </div>
-
-      <div>
-        Deposit
-        <div className="textbox">
-          <input
-            id="Deposit"
-            type="number"
-            min="0"
-            value={state.deposit}
-            onChange={handleChange}
-          />
-        </div>
-      </div>
-
-      <div>
-        Percentage
-        <div className="textbox">
-          <input
-            id="Percentage"
-            type="range"
-            min="0"
-            max="100"
-            step="1"
-            value={state.percentage}
-            onChange={handleChange}
-          />
-          {`${state.percentage}%`}
-        </div>
-      </div>
-
-      <div>
-        Mortgage Value
-        <div className="textbox">
-          <input
-            id="Mortgage-Value"
-            type="number"
-            min="0"
-            value={state.mortValue}
-            onChange={handleChange}
-          />
-        </div>
-      </div>
-
-      <div>
-        Interest Rate
-        <div className="textbox">
-          <input
-            id="Interest-Rate"
-            type="range"
-            min="0"
-            step="0.1"
-            max="5"
-            value={state.intRate}
-            onChange={handleChange}
-          />
-          {`${state.intRate}%`}
-        </div>
-      </div>
-
-      <div>
-        Years
-        <div className="textbox">
-          <input
-            id="Years"
-            type="number"
-            min="0"
-            value={state.years}
-            onChange={handleChange}
-          />
-        </div>
-      </div> */}
     </form>
   )
 }
