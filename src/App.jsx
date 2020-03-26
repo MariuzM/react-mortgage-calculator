@@ -7,13 +7,17 @@ const init = {
   deposit: '',
   percentage: '',
   mortValue: '',
-  intRate: '',
-  years: '',
+  intRate: 2,
+  years: 1,
   mortFinal: 0,
 }
 
 export default function App() {
   const [state, setState] = useState(init)
+
+  const calcMortFinal = (mortValue, intRate, years) => {
+    return (mortValue * (intRate / 100 + 1) ** years).toFixed(2)
+  }
 
   const handleChange = event => {
     const toNumber = event.target.value
@@ -40,9 +44,7 @@ export default function App() {
           percentage: toNumber,
           deposit: (state.propValue * toNumber) / 100,
           mortValue: state.propValue - (state.propValue * toNumber) / 100,
-          mortFinal: (state.mortValue * (state.intRate / 100 + 1) ** state.years).toFixed(
-            2,
-          ),
+          mortFinal: calcMortFinal(state.mortValue, state.intRate, state.years),
         })
         break
       case 'Mortgage Value':
@@ -51,21 +53,21 @@ export default function App() {
           mortValue: toNumber,
           deposit: state.propValue - toNumber,
           percentage: state.propValue - toNumber,
-          mortFinal: (toNumber * (state.intRate / 100 + 1) ** state.years).toFixed(2),
+          mortFinal: calcMortFinal(toNumber, state.intRate, state.years),
         })
         break
       case 'Interest Rate':
         setState({
           ...state,
           intRate: toNumber,
-          mortFinal: (state.mortValue * (toNumber / 100 + 1) ** state.years).toFixed(2),
+          mortFinal: calcMortFinal(state.mortValue, toNumber, state.years),
         })
         break
       case 'Years':
         setState({
           ...state,
           years: toNumber,
-          mortFinal: (state.mortValue * (state.intRate / 100 + 1) ** toNumber).toFixed(2),
+          mortFinal: calcMortFinal(state.mortValue, state.intRate, toNumber),
         })
         break
       default:
