@@ -32,7 +32,7 @@ export default function App() {
     },
     {
       key: 3,
-      name: 'Percentage',
+      name: 'Deposit percentage',
       id: 'Percentage',
       type: 'range',
       max: '100',
@@ -80,7 +80,7 @@ export default function App() {
         setState({
           ...state,
           propValue: toNumber,
-          percentage: Math.trunc((state.deposit * 100) / toNumber),
+          percentage: (state.deposit * 100) / toNumber,
           mortValue: toNumber - state.deposit,
         })
         break
@@ -88,7 +88,7 @@ export default function App() {
         setState({
           ...state,
           deposit: toNumber,
-          percentage: Math.trunc((toNumber * 100) / state.propValue),
+          percentage: ((toNumber * 100) / state.propValue).toFixed(2),
           mortValue: state.propValue - toNumber,
         })
         break
@@ -96,17 +96,16 @@ export default function App() {
         setState({
           ...state,
           percentage: toNumber,
-          deposit: (state.propValue * toNumber) / 100,
-          mortValue: state.propValue - (state.propValue * toNumber) / 100,
-          // mortFinal: calcMortFinal(state.mortValue, state.intRate, state.years),
+          deposit: ((state.propValue * toNumber) / 100).toFixed(2),
+          mortValue: (state.propValue - (state.propValue * toNumber) / 100).toFixed(2),
         })
         break
       case 'Mortgage-Value':
         setState({
           ...state,
           mortValue: toNumber,
-          deposit: state.propValue - toNumber,
-          percentage: state.propValue - toNumber,
+          deposit: (state.propValue - toNumber).toFixed(2),
+          percentage: (100 - 100 * (toNumber / state.propValue)).toFixed(2),
           mortFinal: calcMortFinal(toNumber, state.intRate, state.years),
         })
         break
@@ -138,7 +137,7 @@ export default function App() {
           <div key={key} className="form-group">
             <span>
               {name}
-              {percent !== undefined ? ` ${percent}%` : ''}
+              <div>{percent !== undefined ? ` ${percent}%` : ''}</div>
             </span>
             <input
               id={id}
