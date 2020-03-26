@@ -7,6 +7,7 @@ const init = {
   deposit: '',
   percentage: '',
   mortValue: '',
+  intRate: '',
 }
 
 export default function App() {
@@ -34,11 +35,27 @@ export default function App() {
       case 'Percentage':
         setState({
           ...state,
-          deposit: (state.propValue * toNumber) / 100,
           percentage: toNumber,
+          deposit: (state.propValue * toNumber) / 100,
           mortValue: state.propValue - (state.propValue * toNumber) / 100,
         })
         break
+      case 'Mortgage Value':
+        setState({
+          ...state,
+          mortValue: toNumber,
+          deposit: state.propValue - toNumber,
+          percentage: state.propValue - toNumber,
+        })
+        break
+
+      case 'Interest Rate':
+        setState({
+          ...state,
+          intRate: toNumber,
+        })
+        break
+
       default:
         break
     }
@@ -88,6 +105,19 @@ export default function App() {
           onChange={handleChange}
           placeholder="Mortgage Value"
         />
+      </div>
+
+      <div className="textbox">
+        <input
+          type="range"
+          min="0"
+          step="0.1"
+          max="5"
+          value={state.intRate}
+          onChange={handleChange}
+          placeholder="Interest Rate"
+        />
+        {`${state.intRate}%`}
       </div>
     </form>
   )
