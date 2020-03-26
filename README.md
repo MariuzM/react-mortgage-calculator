@@ -1,7 +1,5 @@
 # Mortgage Calculator
 
-Summary
-
 ### Installing
 
 ```
