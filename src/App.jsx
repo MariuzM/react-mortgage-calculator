@@ -8,8 +8,8 @@ export default function App() {
     deposit: '',
     percentage: '',
     mortValue: '',
-    intRate: 2,
-    years: 1,
+    intRate: '2',
+    years: '1',
     mortFinal: '',
   })
 
@@ -18,7 +18,7 @@ export default function App() {
       key: 1,
       name: 'Property Value',
       id: 'Property-Value',
-      type: 'number',
+      type: 'string',
       value: state.propValue,
       className: 'form-field',
     },
@@ -26,7 +26,7 @@ export default function App() {
       key: 2,
       name: 'Deposit',
       id: 'Deposit',
-      type: 'number',
+      type: 'string',
       value: state.deposit,
       className: 'form-field',
     },
@@ -44,7 +44,7 @@ export default function App() {
       key: 4,
       name: 'Mortgage Value',
       id: 'Mortgage-Value',
-      type: 'number',
+      type: 'string',
       value: state.mortValue,
       className: 'form-field',
     },
@@ -63,7 +63,7 @@ export default function App() {
       key: 6,
       name: 'Years',
       id: 'Years',
-      type: 'number',
+      type: 'string',
       value: state.years,
       className: 'form-field',
     },
@@ -80,15 +80,17 @@ export default function App() {
   }
 
   const handleChange = (event) => {
-    const toNumber = event.target.value
+    const toNumber = parseFloat(event.target.value.replace(/,/g, ''))
 
     switch (event.target.id) {
       case 'Property-Value':
         setState({
           ...state,
+          // propValue: parseFloat(toNumber.replace(/,/g, '')),
           propValue: toNumber,
           percentage: (state.deposit * 100) / toNumber,
           mortValue: (toNumber - state.deposit).toFixed(2),
+          // mortValue: parseFloat((toNumber - state.deposit).toFixed(2).replace(/,/g, '')),
         })
         break
       case 'Deposit':
@@ -132,6 +134,7 @@ export default function App() {
         break
       default:
         break
+      // }
     }
   }
 
@@ -147,7 +150,7 @@ export default function App() {
             <input
               id={id}
               type={type}
-              value={value}
+              value={comma(value)}
               onChange={handleChange}
               step={step}
               min="0"
