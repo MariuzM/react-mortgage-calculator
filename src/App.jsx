@@ -10,7 +10,7 @@ export default function App() {
     mortValue: '',
     intRate: 2,
     years: 1,
-    mortFinal: 0,
+    mortFinal: '',
   })
 
   const elements = [
@@ -69,19 +69,26 @@ export default function App() {
     },
   ]
 
-  const calcMortFinal = (mortValue, intRate, years) => {
-    return (mortValue * (intRate / 100 + 1) ** years).toFixed(2)
+  const comma = (num) => {
+    const numParts = num.toString().split('.')
+    numParts[0] = numParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    return numParts.join('.')
   }
 
-  const handleChange = event => {
+  const calcMortFinal = (mortValue, intRate, years) => {
+    return comma((mortValue * (intRate / 100 + 1) ** years).toFixed(2))
+  }
+
+  const handleChange = (event) => {
     const toNumber = event.target.value
+
     switch (event.target.id) {
       case 'Property-Value':
         setState({
           ...state,
           propValue: toNumber,
           percentage: (state.deposit * 100) / toNumber,
-          mortValue: toNumber - state.deposit,
+          mortValue: (toNumber - state.deposit).toFixed(2),
         })
         break
       case 'Deposit':
@@ -89,7 +96,7 @@ export default function App() {
           ...state,
           deposit: toNumber,
           percentage: ((toNumber * 100) / state.propValue).toFixed(2),
-          mortValue: state.propValue - toNumber,
+          mortValue: (state.propValue - toNumber).toFixed(2),
         })
         break
       case 'Percentage':
@@ -127,8 +134,6 @@ export default function App() {
         break
     }
   }
-
-  console.log(state)
 
   return (
     <form>
