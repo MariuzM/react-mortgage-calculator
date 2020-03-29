@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
 
 import './App.scss'
 
@@ -21,7 +20,7 @@ export default function App() {
       key: 1,
       name: 'Property Value',
       id: 'Property-Value',
-      type: 'string',
+      type: 'text',
       value: state.propValue,
       className: 'form-field',
     },
@@ -29,7 +28,7 @@ export default function App() {
       key: 2,
       name: 'Deposit',
       id: 'Deposit',
-      type: 'string',
+      type: 'text',
       value: state.deposit,
       className: 'form-field',
     },
@@ -47,7 +46,7 @@ export default function App() {
       key: 4,
       name: 'Mortgage Value',
       id: 'Mortgage-Value',
-      type: 'string',
+      type: 'text',
       value: state.mortValue,
       className: 'form-field',
     },
@@ -66,7 +65,7 @@ export default function App() {
       key: 6,
       name: 'Years',
       id: 'Years',
-      type: 'string',
+      type: 'text',
       value: state.years,
       className: 'form-field',
     },
@@ -76,10 +75,6 @@ export default function App() {
     const numParts = num.toString().split('.')
     numParts[0] = numParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     return numParts.join('.')
-  }
-
-  comma.propTypes = {
-    num: PropTypes.number,
   }
 
   const calcMortFinal = (mortValue, intRate, years) => {
@@ -168,6 +163,10 @@ export default function App() {
               type={type}
               value={comma(value)}
               onChange={handleChange}
+              onClick={(e) => {
+                e.target.focus()
+                e.target.select()
+              }}
               step={step}
               min="0"
               max={max}
