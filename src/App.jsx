@@ -1,17 +1,20 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import PropTypes from 'prop-types'
 
 import './App.scss'
 
+const init = {
+  propValue: '',
+  deposit: '',
+  percentage: '',
+  mortValue: '',
+  intRate: '2',
+  years: '1',
+  mortFinal: '',
+}
+
 export default function App() {
-  const [state, setState] = useState({
-    propValue: '',
-    deposit: '',
-    percentage: '',
-    mortValue: '',
-    intRate: '2',
-    years: '1',
-    mortFinal: '',
-  })
+  const [state, setState] = useState(init)
 
   const elements = [
     {
@@ -75,9 +78,23 @@ export default function App() {
     return numParts.join('.')
   }
 
+  comma.propTypes = {
+    num: PropTypes.number,
+  }
+
   const calcMortFinal = (mortValue, intRate, years) => {
     return comma((mortValue * (intRate / 100 + 1) ** years).toFixed(2))
   }
+
+  useEffect(() => {
+    if (
+      Number.isNaN(
+        Number(state.propValue || state.deposit || state.mortValue || state.years),
+      )
+    ) {
+      setState(init)
+    }
+  })
 
   const handleChange = (event) => {
     const toNumber = parseFloat(event.target.value.replace(/,/g, ''))
@@ -134,7 +151,6 @@ export default function App() {
         break
       default:
         break
-      // }
     }
   }
 
