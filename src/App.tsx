@@ -3,16 +3,16 @@ import React, { useState, useEffect } from 'react'
 import './App.scss'
 
 const init = {
-  propValue: '',
-  deposit: '',
-  percentage: '',
-  mortValue: '',
-  intRate: '2',
-  years: '1',
-  mortFinal: '',
+  propValue: 0,
+  deposit: 0,
+  percentage: 0,
+  mortValue: 0,
+  intRate: 2,
+  years: 1,
+  mortFinal: 0,
 }
 
-export default function App() {
+const App: React.FC = () => {
   const [state, setState] = useState(init)
 
   const elements = [
@@ -71,77 +71,76 @@ export default function App() {
     },
   ]
 
-  const comma = (num) => {
+  console.log(state)
+
+  const comma = (num: number): string => {
     const numParts = num.toString().split('.')
     numParts[0] = numParts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',')
     return numParts.join('.')
   }
 
-  const calcMortFinal = (mortValue, intRate, years) => {
-    return comma((mortValue * (intRate / 100 + 1) ** years).toFixed(2))
+  const calcMortFinal = (mortValue: number, intRate: number, years: number): string => {
+    return comma(parseFloat((mortValue * (intRate / 100 + 1) ** years).toFixed(2)))
   }
 
   useEffect(() => {
-    if (
-      Number.isNaN(
-        Number(state.propValue || state.deposit || state.mortValue || state.years),
-      )
-    ) {
-      setState(init)
-    }
+    if (Number.isNaN(Number(state.propValue))) setState({ ...state, propValue: 0 })
+    if (Number.isNaN(Number(state.deposit))) setState({ ...state, deposit: 0 })
+    if (Number.isNaN(Number(state.mortValue))) setState({ ...state, mortValue: 0 })
+    if (Number.isNaN(Number(state.years))) setState({ ...state, years: 0 })
   })
 
-  const handleChange = (event) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const toNumber = parseFloat(event.target.value.replace(/,/g, ''))
 
     switch (event.target.id) {
       case 'Property-Value':
         setState({
           ...state,
-          // propValue: parseFloat(toNumber.replace(/,/g, '')),
           propValue: toNumber,
           percentage: (state.deposit * 100) / toNumber,
-          mortValue: (toNumber - state.deposit).toFixed(2),
-          // mortValue: parseFloat((toNumber - state.deposit).toFixed(2).replace(/,/g, '')),
+          mortValue: toNumber - state.deposit,
         })
         break
       case 'Deposit':
         setState({
           ...state,
           deposit: toNumber,
-          percentage: ((toNumber * 100) / state.propValue).toFixed(2),
-          mortValue: (state.propValue - toNumber).toFixed(2),
+          percentage: (toNumber * 100) / state.propValue,
+          mortValue: state.propValue - toNumber,
         })
         break
       case 'Percentage':
         setState({
           ...state,
           percentage: toNumber,
-          deposit: ((state.propValue * toNumber) / 100).toFixed(2),
-          mortValue: (state.propValue - (state.propValue * toNumber) / 100).toFixed(2),
+          deposit: (state.propValue * toNumber) / 100,
+          mortValue: parseFloat(
+            (state.propValue - (state.propValue * toNumber) / 100).toFixed(2),
+          ),
         })
         break
       case 'Mortgage-Value':
         setState({
           ...state,
           mortValue: toNumber,
-          deposit: (state.propValue - toNumber).toFixed(2),
-          percentage: (100 - 100 * (toNumber / state.propValue)).toFixed(2),
-          mortFinal: calcMortFinal(toNumber, state.intRate, state.years),
+          deposit: state.propValue - toNumber,
+          percentage: 100 - 100 * (toNumber / state.propValue),
+          mortFinal: parseFloat(calcMortFinal(toNumber, state.intRate, state.years)),
         })
         break
       case 'Interest-Rate':
         setState({
           ...state,
           intRate: toNumber,
-          mortFinal: calcMortFinal(state.mortValue, toNumber, state.years),
+          mortFinal: parseFloat(calcMortFinal(state.mortValue, toNumber, state.years)),
         })
         break
       case 'Years':
         setState({
           ...state,
           years: toNumber,
-          mortFinal: calcMortFinal(state.mortValue, state.intRate, toNumber),
+          mortFinal: parseFloat(calcMortFinal(state.mortValue, state.intRate, toNumber)),
         })
         break
       default:
@@ -162,8 +161,9 @@ export default function App() {
               id={id}
               type={type}
               value={comma(value)}
+              // value={value}
               onChange={handleChange}
-              onClick={(e) => {
+              onClick={(e): void => {
                 e.target.focus()
                 e.target.select()
               }}
@@ -179,3 +179,5 @@ export default function App() {
     </form>
   )
 }
+
+export default App

@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    // "target": "esnext",
+    "target": "es6",
+    "module": "commonjs",
+    "jsx": "react",
+    "watch": true,
+    "lib": ["es6", "dom"],
+    "outDir": "./dist",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "strict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "esModuleInterop": true
+  }
+}

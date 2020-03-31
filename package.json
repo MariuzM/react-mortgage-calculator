@@ -1,33 +1,39 @@
 {
 	"version": "1.0.0",
-	"main": "index.jsx",
+	"main": "index.tsx",
 	"scripts": {
-		"start": "NODE_ENV=development parcel src/index.html --open",
-		"build": "NODE_ENV=production parcel build src/index.html --out-dir build --public-url ./"
+		"start": "NODE_ENV=development parcel src/index.html --open ",
+		"build": "NODE_ENV=production parcel build src/index.html --out-dir build --public-url ./",
+		"lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+		"test": "tsc",
+		"check-types": "tsc"
 	},
 	"author": "",
 	"license": "ISC",
 	"devDependencies": {
 		"@babel/core": "^7.9.0",
 		"@babel/plugin-proposal-class-properties": "^7.8.3",
-		"@babel/plugin-transform-runtime": "^7.9.0",
-		"@babel/preset-env": "^7.9.0",
 		"@babel/preset-react": "^7.9.4",
-		"babel-eslint": "^10.1.0",
+		"@babel/preset-typescript": "^7.9.0",
+		"@types/react": "^16.9.29",
+		"@types/react-dom": "^16.9.5",
+		"@typescript-eslint/eslint-plugin": "^2.26.0",
+		"@typescript-eslint/parser": "^2.26.0",
+		"babel-loader": "^8.1.0",
 		"eslint": "^6.8.0",
-		"eslint-config-airbnb": "^18.1.0",
 		"eslint-config-prettier": "^6.10.1",
-		"eslint-plugin-import": "^2.20.1",
+		"eslint-config-typescript": "^3.0.0",
+		"eslint-plugin-import": "^2.20.2",
 		"eslint-plugin-jsx-a11y": "^6.2.3",
 		"eslint-plugin-prettier": "^3.1.2",
 		"eslint-plugin-react": "^7.19.0",
 		"eslint-plugin-react-hooks": "^3.0.0",
 		"parcel-bundler": "^1.12.4",
-		"sass": "^1.26.3"
+		"prettier": "^2.0.2",
+		"sass": "^1.26.3",
+		"typescript": "^3.8.3"
 	},
 	"dependencies": {
-		"prettier": "^2.0.2",
-		"prop-types": "^15.7.2",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1"
 	}

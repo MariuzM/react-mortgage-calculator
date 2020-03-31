@@ -1,18 +1,45 @@
 module.exports = {
-  env: { browser: true, es6: true },
-  extends: ['airbnb', 'prettier'],
-  parser: 'babel-eslint',
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
-  },
+  parser: '@typescript-eslint/parser',
+  plugins: ['react', '@typescript-eslint', 'prettier'],
+  extends: [
+    'plugin:react/recommended',
+    'plugin:prettier/recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier/@typescript-eslint',
+  ],
+  // settings: {
+  //   'import/parsers': {
+  //     '@typescript-eslint/parser': ['.ts', '.tsx'],
+  //   },
+  //   'import/resolver': {
+  //     typescript: {},
+  //   },
+  // },
   parserOptions: {
-    ecmaVersion: 6,
     sourceType: 'module',
-    ecmaFeatures: { jsx: true },
     ecmaVersion: 2018,
-    sourceType: 'module',
+    ecmaFeatures: { jsx: true },
+    // jsx: true,
+    // useJSXTextNode: true,
   },
-  plugins: ['react', 'react-hooks', 'prettier'],
-  rules: {},
+  rules: {
+    // '@typescript-eslint/explicit-function-return-type': 'off',
+    // 'react-hooks/rules-of-hooks': 'error',
+    // 'react-hooks/exhaustive-deps': 'warn',
+    'react/prop-types': 'off',
+    // '@typescript-eslint/explicit-function-return-type': 'off',
+  },
+  overrides: [
+    {
+      files: ['*.ts', '*.tsx'],
+      rules: {
+        '@typescript-eslint/explicit-function-return-type': ['error'],
+      },
+    },
+  ],
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
 }
