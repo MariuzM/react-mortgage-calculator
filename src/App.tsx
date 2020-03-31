@@ -80,7 +80,7 @@ const App: React.FC = () => {
   }
 
   const calcMortFinal = (mortValue: number, intRate: number, years: number): string => {
-    return comma(parseFloat((mortValue * (intRate / 100 + 1) ** years).toFixed(2)))
+    return (mortValue * (intRate / 100 + 1) ** years).toFixed(2)
   }
 
   useEffect(() => {
@@ -175,7 +175,7 @@ const App: React.FC = () => {
           </div>
         )
       })}
-      {state.mortFinal}
+      {comma(state.mortFinal)}
     </form>
   )
 }
