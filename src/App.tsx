@@ -88,6 +88,7 @@ const App: React.FC = () => {
     if (Number.isNaN(Number(state.deposit))) setState({ ...state, deposit: 0 })
     if (Number.isNaN(Number(state.mortValue))) setState({ ...state, mortValue: 0 })
     if (Number.isNaN(Number(state.years))) setState({ ...state, years: 0 })
+    if (Number.isNaN(Number(state.mortFinal))) setState({ ...state, mortFinal: 0 })
   })
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
